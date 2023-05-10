@@ -77,6 +77,7 @@ export default function Home() {
     setFilters(prev => {
       return {
         ...prev,
+        page: 1,
         [id]: value,
       };
     });
