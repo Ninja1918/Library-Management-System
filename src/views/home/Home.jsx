@@ -22,6 +22,7 @@ import Filters from './components/Filters';
 import { debounce, filter } from 'lodash';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getBooksParams } from './utils';
+import BookSkeleton from './components/BookSkeleton';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -110,7 +111,6 @@ export default function Home() {
   useEffect(() => {
     console.log(books);
   }, [books]);
-
   useEffect(() => {
     Setup();
   }, []);
@@ -139,53 +139,57 @@ export default function Home() {
             />
           </Flex>
         </FilterContainer>
-        <BooksContainer
-          id="book-container"
-          padding="30px"
-          h="100%"
-          overflowY="scroll"
-        >
-          {books.length !== 0 ? (
-            <InfiniteScroll
-              dataLength={books.length}
-              next={handleOnRowsScrollEnd}
-              hasMore={hasMoreData}
-              scrollThreshold={1}
-              loader={<Spinner />}
-              style={{ overflow: 'unset' }}
-              scrollableTarget="book-container"
-            >
-              <Grid
-                templateColumns={[
-                  'repeat(1, 1fr)',
-                  'repeat(1, 1fr)',
-                  'repeat(2, 1fr)',
-                  'repeat(3, 1fr)',
-                  'repeat(4, 1fr)',
-                  'repeat(5, 1fr)',
-                ]}
-                gap={6}
+        {loading ? (
+          <BookSkeleton />
+        ) : (
+          <BooksContainer
+            id="book-container"
+            padding="30px"
+            h="100%"
+            overflowY="scroll"
+          >
+            {books.length !== 0 ? (
+              <InfiniteScroll
+                dataLength={books.length}
+                next={handleOnRowsScrollEnd}
+                hasMore={hasMoreData}
+                scrollThreshold={1}
+                loader={<BookSkeleton />}
+                style={{ overflow: 'unset' }}
+                scrollableTarget="book-container"
               >
-                {books?.map((book, index) => {
-                  return (
-                    <GridItem key={book.key + index}>
-                      <BookItem
-                        authors={book.author_name}
-                        publisher={book.publisher}
-                        thumbnail={''}
-                        title={book.title}
-                      />
-                    </GridItem>
-                  );
-                })}
-              </Grid>
-            </InfiniteScroll>
-          ) : (
-            <Box>
-              <Heading>No books for the current query</Heading>
-            </Box>
-          )}
-        </BooksContainer>
+                <Grid
+                  templateColumns={[
+                    'repeat(1, 1fr)',
+                    'repeat(1, 1fr)',
+                    'repeat(2, 1fr)',
+                    'repeat(3, 1fr)',
+                    'repeat(4, 1fr)',
+                    'repeat(5, 1fr)',
+                  ]}
+                  gap={6}
+                >
+                  {books?.map((book, index) => {
+                    return (
+                      <GridItem key={book.key + index}>
+                        <BookItem
+                          authors={book.author_name}
+                          publisher={book.publisher}
+                          thumbnail={''}
+                          title={book.title}
+                        />
+                      </GridItem>
+                    );
+                  })}
+                </Grid>
+              </InfiniteScroll>
+            ) : (
+              <Box>
+                <Heading>No books for the current query</Heading>
+              </Box>
+            )}
+          </BooksContainer>
+        )}
       </LibraryContainer>
     </>
   );
