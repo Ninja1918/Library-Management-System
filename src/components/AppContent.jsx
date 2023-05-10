@@ -7,7 +7,7 @@ import routes from '../routes';
 
 const AppContent = () => {
   return (
-    <Box padding="1%">
+    <Box padding="1%" h="100%">
       <Suspense fallback={<Spinner />}>
         <Routes>
           {routes.map((route, idx) => {
