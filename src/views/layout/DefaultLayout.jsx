@@ -10,7 +10,7 @@ export default function DefaultLayout() {
       <Flex as="header" w="100%" position="sticky" top="0" zIndex="999">
         <NavBar />
       </Flex>
-      <Box h="inherit">
+      <Box h="90%">
         <AppContent />
       </Box>
     </Box>
