@@ -13,7 +13,7 @@ function MimicBook() {
 
 export default function BookSkeleton() {
   return (
-    <SkeletonContainer {...BOOK_GRID_OPTIONS} paddingY={'30px'}>
+    <SkeletonContainer {...BOOK_GRID_OPTIONS}>
       {Array.from({ length: 5 }, () => (
         <MimicBook />
       ))}

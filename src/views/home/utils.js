@@ -1,6 +1,6 @@
 export const BOOK_ITEM_DIMENTIONS = {
-  height: '400px',
-  width: '300px',
+  height: '350px',
+  width: '250px',
 };
 
 export const BOOK_GRID_OPTIONS = {
@@ -13,6 +13,7 @@ export const BOOK_GRID_OPTIONS = {
     'repeat(4, 1fr)',
   ],
   gap: 6,
+  paddingY: '30px',
 };
 
 export function getBooksParams(params) {

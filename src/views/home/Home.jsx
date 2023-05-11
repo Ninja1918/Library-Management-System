@@ -7,6 +7,7 @@ import {
   Heading,
   Skeleton,
   Spinner,
+  useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -146,44 +147,50 @@ export default function Home() {
             getBooks={_getBooks}
           />
         </FilterContainer>
-        {loading ? (
-          <BookSkeleton />
-        ) : (
-          <BooksContainer id="book-container" h="100%" overflowY="scroll">
-            {books.length !== 0 ? (
-              <InfiniteScroll
-                dataLength={books.length}
-                next={handleOnRowsScrollEnd}
-                hasMore={hasMoreData}
-                scrollThreshold={1}
-                loader={<BookSkeleton />}
-                style={{ overflowY: 'unset' }}
-                scrollableTarget="book-container"
-              >
-                <Grid {...BOOK_GRID_OPTIONS}>
-                  {books?.map((book, index) => {
-                    return (
-                      <GridItem key={book.key + index}>
-                        <BookItem
-                          authors={book.author_name}
-                          publisher={book.publisher}
-                          thumbnail={''}
-                          title={book.title}
-                          coverId={book.cover_i}
-                          readers={book.already_read_count}
-                        />
-                      </GridItem>
-                    );
-                  })}
-                </Grid>
-              </InfiniteScroll>
-            ) : (
-              <Box>
-                <Heading>No books for the current query</Heading>
-              </Box>
-            )}
-          </BooksContainer>
-        )}
+        <BooksContainer
+          margin="auto"
+          borderRadius="7px"
+          bg={useColorModeValue('gray.100', 'gray.600')}
+          id="book-container"
+          h="100%"
+          px="9"
+          overflowY="scroll"
+        >
+          {loading ? (
+            <BookSkeleton />
+          ) : books.length !== 0 ? (
+            <InfiniteScroll
+              dataLength={books.length}
+              next={handleOnRowsScrollEnd}
+              hasMore={hasMoreData}
+              scrollThreshold={1}
+              loader={<BookSkeleton />}
+              style={{ overflowY: 'unset' }}
+              scrollableTarget="book-container"
+            >
+              <Grid {...BOOK_GRID_OPTIONS}>
+                {books?.map((book, index) => {
+                  return (
+                    <GridItem key={book.key + index}>
+                      <BookItem
+                        authors={book.author_name}
+                        publisher={book.publisher}
+                        thumbnail={''}
+                        title={book.title}
+                        coverId={book.cover_i}
+                        readers={book.already_read_count}
+                      />
+                    </GridItem>
+                  );
+                })}
+              </Grid>
+            </InfiniteScroll>
+          ) : (
+            <Box>
+              <Heading>No books for the current query</Heading>
+            </Box>
+          )}
+        </BooksContainer>
       </LibraryContainer>
     </>
   );

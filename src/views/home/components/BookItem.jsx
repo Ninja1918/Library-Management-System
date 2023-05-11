@@ -1,10 +1,13 @@
 import {
+  Badge,
   Button,
   ButtonGroup,
   Card,
   CardBody,
   CardFooter,
+  Center,
   Divider,
+  Flex,
   Heading,
   Image,
   Stack,
@@ -23,15 +26,21 @@ export default function BookItem({
 }) {
   return (
     <Card {...BOOK_ITEM_DIMENTIONS} overflow="hidden" textAlign="center">
-      <CardBody>
+      <CardBody height="100%">
         <Stack mt="6" spacing="3">
-          <Text>Readers: {readers}</Text>
-          <Image
-            src={`https://covers.openlibrary.org/b/id/${coverId}.jpg`}
-            alt={title}
-            borderRadius="lg"
-            width="50%"
-          ></Image>
+          <Flex direction="row" justifyContent="start">
+            <Badge>Readers: {readers}</Badge>
+          </Flex>
+          <Center>
+            <Image
+              src={`https://covers.openlibrary.org/b/id/${coverId}.jpg`}
+              alt={title}
+              borderRadius="lg"
+              width="90%"
+              objectFit="cover"
+              height="170px"
+            />
+          </Center>
           <Tooltip label={title}>
             <Heading textAlign="start" noOfLines={1} size="md">
               {title}
