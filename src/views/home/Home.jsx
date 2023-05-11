@@ -27,12 +27,12 @@ import BookSkeleton from './components/BookSkeleton';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState();
   const [totalBooks, setTotalBooks] = useState(-1);
   const [hasMoreData, setHasMoreData] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     search: 'harry potter',
-    page: 1,
     author: '',
     subject: '',
   });
@@ -40,7 +40,7 @@ export default function Home() {
 
   async function getBooks(
     search = filters.search,
-    page = filters.page,
+    page = currentPage,
     author = filters.author,
     subject = filters.subject
   ) {
@@ -64,7 +64,7 @@ export default function Home() {
     if (response?.status === 200) {
       page !== 1
         ? setBooks(prev => [...prev, ...response.data.docs])
-        : setBooks(response.data.docs);
+        : setBooks(response.data?.docs || []);
       setTotalBooks(response.data.numFound || -1);
     } else {
       toast({
@@ -79,10 +79,10 @@ export default function Home() {
   }
 
   const _getBooks = debounce((id, value) => {
+    setCurrentPage(1);
     setFilters(prev => {
       return {
         ...prev,
-        page: 1,
         [id]: value,
       };
     });
@@ -91,12 +91,7 @@ export default function Home() {
   const handleOnRowsScrollEnd = async () => {
     if (books.length < totalBooks) {
       setHasMoreData(true);
-      setFilters(prev => {
-        return {
-          ...prev,
-          page: prev.page + 1,
-        };
-      });
+      setCurrentPage(prev => prev + 1);
     } else {
       setHasMoreData(false);
     }
@@ -113,36 +108,38 @@ export default function Home() {
   }, [books]);
 
   useEffect(() => {
+    books !== undefined && getBooks(undefined, currentPage);
+  }, [currentPage]);
+
+  useEffect(() => {
     Setup();
   }, [filters]);
 
   return (
     <>
+      <Box
+        id="total-books"
+        position="sticky"
+        top="0"
+        background="rgb(0,0,0,0.5)"
+        zIndex={2}
+        width="fit-content"
+        padding="10px"
+        borderRadius="7px"
+        textAlign="start"
+      >
+        <Heading noOfLines={1} size="sm" zIndex={3}>
+          Total Books: {loading ? <Spinner /> : totalBooks}
+        </Heading>
+      </Box>
       <LibraryContainer
         templateColumns={{ base: '100%', xl: '20% 80%' }}
         textAlign="center"
         padding="30px"
         h="100%"
+        gap={6}
       >
-        <FilterContainer
-          padding={{ base: '', md: '30px' }}
-          minH={{ base: '50%', md: '100%' }}
-        >
-          <Box
-            id="total-books"
-            position="sticky"
-            top="0"
-            background="rgb(0,0,0,0.5)"
-            zIndex={2}
-            width="fit-content"
-            padding="10px"
-            borderRadius="7px"
-            textAlign="start"
-          >
-            <Heading noOfLines={1} size="sm" zIndex={3}>
-              Total Books: {loading ? <Spinner /> : totalBooks}
-            </Heading>
-          </Box>
+        <FilterContainer minH={{ base: '200px', md: '100%' }}>
           <Filters
             search={filters.search}
             filters={filters}
@@ -152,12 +149,7 @@ export default function Home() {
         {loading ? (
           <BookSkeleton />
         ) : (
-          <BooksContainer
-            id="book-container"
-            padding="30px"
-            h="100%"
-            overflowY="scroll"
-          >
+          <BooksContainer id="book-container" h="100%" overflowY="scroll">
             {books.length !== 0 ? (
               <InfiniteScroll
                 dataLength={books.length}
@@ -165,7 +157,7 @@ export default function Home() {
                 hasMore={hasMoreData}
                 scrollThreshold={1}
                 loader={<BookSkeleton />}
-                style={{ overflow: 'unset' }}
+                style={{ overflowY: 'unset' }}
                 scrollableTarget="book-container"
               >
                 <Grid {...BOOK_GRID_OPTIONS}>
@@ -177,6 +169,8 @@ export default function Home() {
                           publisher={book.publisher}
                           thumbnail={''}
                           title={book.title}
+                          coverId={book.cover_i}
+                          readers={book.already_read_count}
                         />
                       </GridItem>
                     );

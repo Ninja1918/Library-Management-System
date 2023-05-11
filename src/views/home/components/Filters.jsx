@@ -18,6 +18,7 @@ export default function Filters({ search, filters, setFilters, getBooks }) {
         borderRadius="5px"
         padding="1"
         paddingX="8"
+        minH="300px"
         h="100%"
         w="100%"
       >
