@@ -15,9 +15,11 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Image,
 } from '@chakra-ui/react';
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
+import logo from '../assets/brand/logo.png';
 import nav from './nav';
 
 const NavLink = ({ title, link }) => (
@@ -50,7 +52,9 @@ export default function Simple() {
         />
         <HStack spacing={8} alignItems={'center'}>
           <Link href="/home">
-            <Box textDecoration="none">Logo</Box>
+            <Box textDecoration="none" w="70px">
+              <Image src={logo} alt="Open Library Logo" w="100%" />
+            </Box>
           </Link>
           <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
             {nav.map(link => (
