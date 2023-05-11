@@ -12,19 +12,20 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import React from 'react';
+import { BOOK_ITEM_DIMENTIONS } from '../utils';
 
 export default function BookItem({ title, publisher, authors }) {
   return (
-    <Card w="250px" h="350px" overflow="hidden" textAlign="center">
+    <Card {...BOOK_ITEM_DIMENTIONS} overflow="hidden" textAlign="center">
       <CardBody>
         <Stack mt="6" spacing="3">
           <Tooltip label={title}>
-            <Heading overflow="hidden" whiteSpace="nowrap" size="md">
+            <Heading textAlign="start" noOfLines={1} size="md">
               {title}
             </Heading>
           </Tooltip>
           <Tooltip label={authors?.join(',')}>
-            <Text textAlign="start" overflow="hidden" whiteSpace="nowrap">
+            <Text textAlign="start" noOfLines={1}>
               {authors?.join(',')}
             </Text>
           </Tooltip>

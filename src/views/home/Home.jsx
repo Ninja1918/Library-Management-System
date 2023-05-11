@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Flex,
   Grid,
@@ -19,9 +20,9 @@ import {
 } from './components/styledComponents';
 import BookItem from './components/BookItem';
 import Filters from './components/Filters';
-import { debounce, filter } from 'lodash';
+import { debounce } from 'lodash';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { getBooksParams } from './utils';
+import { BOOK_GRID_OPTIONS, getBooksParams } from './utils';
 import BookSkeleton from './components/BookSkeleton';
 
 export default function Home() {
@@ -33,13 +34,15 @@ export default function Home() {
     search: 'harry potter',
     page: 1,
     author: '',
+    subject: '',
   });
   const toast = useToast();
 
   async function getBooks(
     search = filters.search,
     page = filters.page,
-    author = filters.author
+    author = filters.author,
+    subject = filters.subject
   ) {
     if (!toast.isActive('fetching-books')) {
       toast({
@@ -55,6 +58,7 @@ export default function Home() {
         q: search,
         page: page,
         author: author,
+        subject: subject,
       })
     );
     if (response?.status === 200) {
@@ -105,39 +109,45 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getBooks();
-  }, [filters]);
-
-  useEffect(() => {
     console.log(books);
   }, [books]);
+
   useEffect(() => {
     Setup();
-  }, []);
+  }, [filters]);
 
   return (
     <>
       <LibraryContainer
-        templateColumns="20% 80%"
+        templateColumns={{ base: '100%', xl: '20% 80%' }}
         textAlign="center"
         padding="30px"
         h="100%"
       >
-        <FilterContainer padding={['', '30px']} minH="100%">
-          <Flex
-            direction="column"
-            background={'green.500'}
-            borderRadius="5px"
-            padding="1"
-            h="100%"
-            w="100%"
+        <FilterContainer
+          padding={{ base: '', md: '30px' }}
+          minH={{ base: '50%', md: '100%' }}
+        >
+          <Box
+            id="total-books"
+            position="sticky"
+            top="0"
+            background="rgb(0,0,0,0.5)"
+            zIndex={2}
+            width="fit-content"
+            padding="10px"
+            borderRadius="7px"
+            textAlign="start"
           >
-            <Filters
-              search={filters.search}
-              filters={filters}
-              getBooks={_getBooks}
-            />
-          </Flex>
+            <Heading noOfLines={1} size="sm" zIndex={3}>
+              Total Books: {loading ? <Spinner /> : totalBooks}
+            </Heading>
+          </Box>
+          <Filters
+            search={filters.search}
+            filters={filters}
+            getBooks={_getBooks}
+          />
         </FilterContainer>
         {loading ? (
           <BookSkeleton />
@@ -158,17 +168,7 @@ export default function Home() {
                 style={{ overflow: 'unset' }}
                 scrollableTarget="book-container"
               >
-                <Grid
-                  templateColumns={[
-                    'repeat(1, 1fr)',
-                    'repeat(1, 1fr)',
-                    'repeat(2, 1fr)',
-                    'repeat(3, 1fr)',
-                    'repeat(4, 1fr)',
-                    'repeat(5, 1fr)',
-                  ]}
-                  gap={6}
-                >
+                <Grid {...BOOK_GRID_OPTIONS}>
                   {books?.map((book, index) => {
                     return (
                       <GridItem key={book.key + index}>
