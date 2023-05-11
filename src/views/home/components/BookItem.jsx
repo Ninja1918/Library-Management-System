@@ -29,11 +29,11 @@ export default function BookItem({
       <CardBody height="100%">
         <Stack mt="6" spacing="3">
           <Flex direction="row" justifyContent="start">
-            <Badge>Readers: {readers}</Badge>
+            <Badge>Readers: {readers ? readers : 'NA'}</Badge>
           </Flex>
           <Center>
             <Image
-              src={`https://covers.openlibrary.org/b/id/${coverId}.jpg`}
+              src={`https://covers.openlibrary.org/b/id/${coverId}-M.jpg`}
               alt={title}
               borderRadius="lg"
               width="90%"
