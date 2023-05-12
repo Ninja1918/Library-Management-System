@@ -36,6 +36,7 @@ export default function Filters({ search, filters, setFilters, getBooks }) {
             onChange={event => {
               getBooks('search', event.target.value);
             }}
+            placeholder="Harry Potter..."
           />
         </SearchContainer>
         <SearchContainer flexDirection="row" justifyContent="flex-start">
@@ -46,6 +47,7 @@ export default function Filters({ search, filters, setFilters, getBooks }) {
             onChange={event => {
               getBooks('author', event.target.value);
             }}
+            placeholder="JK Rowling..."
           />
         </SearchContainer>
         <SearchContainer flexDirection="row" justifyContent="flex-start">
@@ -56,6 +58,7 @@ export default function Filters({ search, filters, setFilters, getBooks }) {
             onChange={event => {
               getBooks('subject', event.target.value);
             }}
+            placeholder="Home..."
           />
         </SearchContainer>
       </Flex>
