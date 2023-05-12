@@ -9,6 +9,10 @@ Filters.propTypes = {
   getBooks: PropTypes.func,
 };
 
+const LABEL_PROPS = {
+  textAlign: 'initial',
+};
+
 export default function Filters({ search, filters, setFilters, getBooks }) {
   return (
     <>
@@ -24,7 +28,7 @@ export default function Filters({ search, filters, setFilters, getBooks }) {
       >
         <Heading textAlign="start">Filters</Heading>
         <SearchContainer flexDirection="row" justifyContent="flex-start">
-          <Text>Search</Text>
+          <Text {...LABEL_PROPS}>Search</Text>
           <Input
             variant="filled"
             defaultValue={filters.search}
@@ -34,7 +38,7 @@ export default function Filters({ search, filters, setFilters, getBooks }) {
           />
         </SearchContainer>
         <SearchContainer flexDirection="row" justifyContent="flex-start">
-          <Text>author</Text>
+          <Text {...LABEL_PROPS}>author</Text>
           <Input
             variant="filled"
             defaultValue={filters.author}
@@ -44,7 +48,7 @@ export default function Filters({ search, filters, setFilters, getBooks }) {
           />
         </SearchContainer>
         <SearchContainer flexDirection="row" justifyContent="flex-start">
-          <Text>Subject</Text>
+          <Text {...LABEL_PROPS}>Subject</Text>
           <Input
             variant="filled"
             defaultValue={filters.subject}
