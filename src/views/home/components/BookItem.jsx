@@ -1,5 +1,6 @@
 import {
   Badge,
+  Box,
   Button,
   ButtonGroup,
   Card,
@@ -32,14 +33,26 @@ export default function BookItem({
             <Badge>Readers: {readers ? readers : 'NA'}</Badge>
           </Flex>
           <Center>
-            <Image
-              src={`https://covers.openlibrary.org/b/id/${coverId}-M.jpg`}
-              alt={title}
-              borderRadius="lg"
-              width="90%"
-              objectFit="cover"
-              height="170px"
-            />
+            {coverId ? (
+              <Image
+                src={`https://covers.openlibrary.org/b/id/${coverId}-M.jpg`}
+                alt={title}
+                borderRadius="lg"
+                width="90%"
+                objectFit="cover"
+                height="170px"
+              />
+            ) : (
+              <Box
+                border="1px solid rgb(0,0,0, 0.2)"
+                padding="30px"
+                borderRadius="lg"
+                width="90%"
+                height="170px"
+              >
+                <Heading size="md">Cover Unavailable</Heading>
+              </Box>
+            )}
           </Center>
           <Tooltip label={title}>
             <Heading textAlign="start" noOfLines={1} size="md">
