@@ -140,7 +140,7 @@ export default function Home() {
         h="100%"
         gap={6}
       >
-        <FilterContainer minH={{ base: '200px', md: '100%' }}>
+        <FilterContainer minH={{ base: '200px', md: '100%' }} margin="auto">
           <Filters
             search={filters.search}
             filters={filters}
@@ -153,7 +153,7 @@ export default function Home() {
           bg={useColorModeValue('gray.100', 'gray.600')}
           id="book-container"
           h="100%"
-          px="9"
+          p="9"
           overflowY="scroll"
         >
           {loading ? (
