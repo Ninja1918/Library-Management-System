@@ -7,7 +7,7 @@
 - Scroll Pagination is implemented
 - Total number of books for the search query is also seen on the page
 - Theme Modes are implemented as well
-- ![image](https://github.com/Ninja1918/Library-Management-System/assets/31992872/b32aea59-fbc2-48d0-99f1-de990862fef0)
+- ![image](https://github.com/Ninja1918/Library-Management-System/assets/31992872/f36969f2-83b6-437d-b24a-6f7426cae4b5)
 
 ## External Libraries used
 
