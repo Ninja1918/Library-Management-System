@@ -44,9 +44,9 @@ export default function BookItem({
               />
             ) : (
               <Box
-                border="1px solid rgb(0,0,0, 0.2)"
-                padding="30px"
+                bg="rgb(0,0,0, 0.2)"
                 borderRadius="lg"
+                padding="30px"
                 width="90%"
                 height="170px"
               >

@@ -20,11 +20,12 @@ export default function Filters({ search, filters, setFilters, getBooks }) {
         direction="column"
         background={'green.500'}
         borderRadius="5px"
-        padding="1"
+        paddingY="20px"
         paddingX="8"
         minH="300px"
         h="100%"
         w="100%"
+        gap="15px"
       >
         <Heading textAlign="start">Filters</Heading>
         <SearchContainer flexDirection="row" justifyContent="flex-start">
